@@ -1,0 +1,17 @@
+# airootfs/etc/systemd/system/calamares-autostart.service
+[Unit]
+Description=Calamares Installer Autostart
+After=gdm.service graphical.target
+Requires=gdm.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/calamares --dont-use-sudo --verbose
+ExecStartPost=/bin/systemctl stop gdm.service
+Restart=no
+User=liveuser
+Environment=XDG_SESSION_TYPE=x11
+Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/0/bus
+
+[Install]
+WantedBy=graphical.target
